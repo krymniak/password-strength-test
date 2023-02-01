@@ -2,27 +2,39 @@
 	<div class="row">
 		<h1>Password Strength Test</h1>
 		<div class="input">
-			<mat-form-field appearance="fill">
-				<mat-label>Enter password</mat-label>
-				<input matInput [formControl]="textControl" placeholder="Type something" [type]="hide ? 'password' : 'text'" required>
-				<mat-error *ngIf="textControl.hasError('minlength')">
-					Please enter a valid password
-				</mat-error>
-				<mat-error *ngIf="textControl.hasError('required')">
-					Please enter password
-				</mat-error>
-				<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-					<mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-				</button>
-			</mat-form-field>
-		</div>
-		
-		<div class="strength">
-			<ul class="strengthbar">
-				<li class="point"  [style.background-color]="section1"></li>
-				<li class="point" [style.background-color]="section2"></li>
-				<li class="point" [style.background-color]="section3"></li>
-			</ul>
+			<form [formGroup]="form" (ngSubmit)="submit()">
+				<mat-form-field appearance="fill">
+					<mat-label>Enter email</mat-label>
+					<input matInput formControlName="email" placeholder="Type something" type="email" required>
+					<mat-error *ngIf="form.get('email')?.hasError('email')">
+						Not a valid email
+					</mat-error>
+					<mat-error *ngIf="form.get('email')?.hasError('required')">
+						Please enter email
+					</mat-error>
+				</mat-form-field>
+				<mat-form-field appearance="fill">
+					<mat-label>Enter password</mat-label>
+					<input matInput formControlName="password" placeholder="Type something" [type]="hide ? 'password' : 'text'" required>
+					<mat-error *ngIf="form.get('password')?.hasError('minlength')">
+						Password must have 8 symbols
+					</mat-error>
+					<mat-error *ngIf="form.get('password')?.hasError('required')">
+						Please enter password
+					</mat-error>
+					<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+						<mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+					</button>
+				</mat-form-field>
+				<div class="strength">
+					<ul class="strengthbar">
+						<li class="point"  [style.background-color]="section1"></li>
+						<li class="point" [style.background-color]="section2"></li>
+						<li class="point" [style.background-color]="section3"></li>
+					</ul>
+				</div>
+				<button [disabled]="form.invalid" mat-flat-button color="primary" type="submit">Create account</button>
+			</form>
 		</div>
 	</div>
 </div>

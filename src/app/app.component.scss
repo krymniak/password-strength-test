@@ -7,7 +7,6 @@
 .row{
 	display:flex;
 flex-direction:column;
-width: 600px;
 margin: 0 auto;
 h1{
 	font-size: 50px;
@@ -17,8 +16,15 @@ h1{
 .input{
 	display: flex;
 	justify-content: center;
-	margin: 0px 0px 40px 0px;
+	form{
+		display: flex;
+		flex-direction:column;
+		mat-error{
+			text-align: center;
+		}
+	}
 	button{
+
 		border: none;
 	}
 }
@@ -27,6 +33,7 @@ h1{
   display: flex;
   flex-direction: column;
 	width: 100%;
+	margin: 0px 0px 50px 0px ;
 }
 
 .strengthbar {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { debounceTime, Observable, startWith, tap } from 'rxjs';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-root',
@@ -9,27 +9,31 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
 
-	hide = true
+	form!: FormGroup;
+	hide = true;
 	section1: string = 'gray';
 	section2: string = 'gray';
 	section3: string = 'gray';
-	password$!: Observable<string | null>
+	password$!: Observable<string>
 
-	textControl = new FormControl('', [
-		Validators.minLength(8),
-		Validators.required,
-	]);
 
 	constructor() {
 	}
 
 	ngOnInit(): void {
-		this.password$ = this.textControl.valueChanges.pipe(
+		this.form = new FormGroup({
+			email: new FormControl(null, [Validators.required, Validators.email]),
+			password: new FormControl('', [
+				Validators.minLength(8),
+				Validators.required,
+			])
+		})
+		this.password$ = this.form.get('password')!.valueChanges.pipe(
 			debounceTime(500),
 			tap((data) => {
-				const letters = /[a-z]+/.test(data?.toLocaleLowerCase()!);
-				const numbers = /[0-9]+/.test(data!);
-				const symbols = /[$-/:-?{-~!"^_@#`\[\]]/g.test(data!);
+				const letters = /[a-z]+/.test(data?.toLocaleLowerCase());
+				const numbers = /[0-9]+/.test(data);
+				const symbols = /[$-/:-?{-~!"^_@#`\[\]]/g.test(data);
 				const matches = [letters, numbers, symbols];
 				let strength = 0;
 				for (const match of matches) {
@@ -65,6 +69,13 @@ export class AppComponent implements OnInit {
 			)
 		)
 
+	}
+	submit () {
+		const user = {
+			email: this.form.value.email,
+			password: this.form.value.password
+		}
+		console.log('User', user)
 	}
 
 }
