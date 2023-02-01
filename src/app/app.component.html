@@ -1,16 +1,29 @@
-<div class="example-container">
-  <mat-form-field appearance="fill">
-    <mat-label>Enter password</mat-label>
-    <input matInput [formControl]="textControl" placeholder="Type something" type="text" required>
-  </mat-form-field>
+<div class="container">
+	<div class="row">
+		<h1>Password Strength Test</h1>
+		<div class="input">
+			<mat-form-field appearance="fill">
+				<mat-label>Enter password</mat-label>
+				<input matInput [formControl]="textControl" placeholder="Type something" [type]="hide ? 'password' : 'text'" required>
+				<mat-error *ngIf="textControl.hasError('minlength')">
+					Please enter a valid password
+				</mat-error>
+				<mat-error *ngIf="textControl.hasError('required')">
+					Please enter password
+				</mat-error>
+				<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+					<mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+				</button>
+			</mat-form-field>
+		</div>
+		
+		<div class="strength">
+			<ul class="strengthbar">
+				<li class="point"  [style.background-color]="section1"></li>
+				<li class="point" [style.background-color]="section2"></li>
+				<li class="point" [style.background-color]="section3"></li>
+			</ul>
+		</div>
+	</div>
 </div>
-<div *ngIf="password$ | async"><button (click)="butt()">BBB</button></div>
-
-<div class="strength">
-  <ul class="strengthbar">
-    <li class="point"  [style.background-color]="section1"></li>
-    <li class="point" [style.background-color]="section2"></li>
-    <li class="point" [style.background-color]="section3"></li>
-  </ul>
-
-</div>
+<ng-container *ngIf="password$ | async"></ng-container>

@@ -1,24 +1,42 @@
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 50px 32px;
+}
+
+.row{
+	display:flex;
+flex-direction:column;
+width: 600px;
+margin: 0 auto;
+h1{
+	font-size: 50px;
+	text-align: center;
+	margin: 0px 0px 140px 0px;
+}
+.input{
+	display: flex;
+	justify-content: center;
+	margin: 0px 0px 40px 0px;
+	button{
+		border: none;
+	}
+}
+}
 .strength {
   display: flex;
-  flex-direction: row;
-	max-width: 500px;
+  flex-direction: column;
+	width: 100%;
 }
 
 .strengthbar {
   display: flex;
-  flex-grow: 1;
   list-style: none;
   margin: 0;
   padding: 0;
-  vertical-align: 2px;
-}
-
-.point:last-of-type {
-  margin: 0 !important;
 }
 
 .point {
-  background: rgb(0, 0, 0);
   border-radius: 2px;
   display: inline-block;
   height: 5px;

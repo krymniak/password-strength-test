@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { debounceTime, Observable, tap } from 'rxjs';
+import { debounceTime, Observable, startWith, tap } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -9,15 +9,15 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
 
+	hide = true
 	section1: string = 'gray';
-  section2: string = 'gray';
-  section3: string = 'gray';
-	passwordStrength = 0
+	section2: string = 'gray';
+	section3: string = 'gray';
 	password$!: Observable<string | null>
 
 	textControl = new FormControl('', [
 		Validators.minLength(8),
-      Validators.required,
+		Validators.required,
 	]);
 
 	constructor() {
@@ -30,12 +30,11 @@ export class AppComponent implements OnInit {
 				const letters = /[a-z]+/.test(data?.toLocaleLowerCase()!);
 				const numbers = /[0-9]+/.test(data!);
 				const symbols = /[$-/:-?{-~!"^_@#`\[\]]/g.test(data!);
-				const matches =[letters, numbers, symbols];
+				const matches = [letters, numbers, symbols];
 				let strength = 0;
 				for (const match of matches) {
 					strength += match === true ? 1 : 0;
 				}
-				this.passwordStrength = strength
 				if (data === '') {
 					this.section1 = 'gray'
 					this.section2 = 'gray'
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
 					this.section1 = 'red'
 					this.section2 = 'red'
 					this.section3 = 'red'
-				} else switch(strength) {
+				} else switch (strength) {
 					case 1:
 						this.section1 = 'red'
 						this.section2 = 'grey'
@@ -61,15 +60,11 @@ export class AppComponent implements OnInit {
 						this.section3 = 'green'
 						break;
 				}
-					
-			}
-				)
-		)
-		
-	}
 
-	butt() {
-		console.log(this.passwordStrength)
+			}
+			)
+		)
+
 	}
 
 }
