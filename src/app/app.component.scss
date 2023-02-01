@@ -1,0 +1,27 @@
+.strength {
+  display: flex;
+  flex-direction: row;
+	max-width: 500px;
+}
+
+.strengthbar {
+  display: flex;
+  flex-grow: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: 2px;
+}
+
+.point:last-of-type {
+  margin: 0 !important;
+}
+
+.point {
+  background: rgb(0, 0, 0);
+  border-radius: 2px;
+  display: inline-block;
+  height: 5px;
+  margin-right: 1px;
+  flex-grow: 1;
+}
